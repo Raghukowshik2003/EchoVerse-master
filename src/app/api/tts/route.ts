@@ -5,7 +5,34 @@ import { protos } from '@google-cloud/text-to-speech'; // Import protos for the 
 
 // Initialize the Google TTS Client
 // It automatically uses GOOGLE_APPLICATION_CREDENTIALS from .env.local
-const ttsClient = new TextToSpeechClient();
+// Function to initialize the client safely
+function initializeTtsClient() {
+  try {
+    // 1. Read the key content from the environment variable set in Vercel
+    const keyJsonString = process.env.GOOGLE_CLOUD_KEY;
+
+    if (!keyJsonString) {
+      throw new Error('GOOGLE_CLOUD_KEY environment variable is not set.');
+    }
+
+    // 2. Parse the JSON string into an object
+    const credentials = JSON.parse(keyJsonString);
+
+    // 3. Initialize the client explicitly with the parsed credentials
+    return new TextToSpeechClient({ credentials });
+
+  } catch (error) {
+    console.error("Failed to initialize TextToSpeechClient:", error);
+    // Depending on your error handling strategy, you might:
+    // - Return null or undefined and handle it later
+    // - Throw the error to prevent the API route from working without credentials
+    // For now, let's throw to make the issue clear during deployment/runtime
+    throw new Error(`Failed to initialize TTS client: ${error instanceof Error ? error.message : String(error)}`);
+  }
+}
+
+// Initialize the client using the function
+const ttsClient = initializeTtsClient();
 
 export async function POST(request: NextRequest) {
   try {
@@ -64,6 +91,11 @@ export async function POST(request: NextRequest) {
         // Provide slightly more context if possible, but avoid leaking sensitive details
         errorMessage = `TTS Synthesis failed: ${error.message.substring(0, 100)}`; // Limit error message length
     }
+
+    if (error instanceof Error && error.message.startsWith('Failed to initialize TTS client')) {
+      errorMessage = error.message; // Use the specific initialization error
+  }
+
     return NextResponse.json({ error: errorMessage }, { status: 500 });
   }
 }
