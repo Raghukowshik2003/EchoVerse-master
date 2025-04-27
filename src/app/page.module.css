@@ -1,0 +1,75 @@
+/* src/app/page.module.css */
+
+/* --- Mobile Styles (Screens below 1024px) --- */
+@media (max-width: 1023px) {
+  .pageContainer {
+    /* Example: Adjust overall padding for mobile */
+    width: 100%; /* Full width */
+    max-width: 100%;
+    padding-top: 2rem; /* Equivalent to pt-8 */
+    padding-left: 1rem; /* Equivalent to px-4 */
+    padding-right: 1rem; /* Equivalent to px-4 */
+    margin-top: 0; /* Override lg:mt-[-250px] */
+    /* Add any other specific container adjustments */
+  }
+
+  
+
+  .initialUiContent {
+    /* Example: Ensure text block takes full width and centers */
+    width: 100%;
+    margin-top: 1rem; /* Adjust top margin if needed */
+  }
+
+  .title {
+     /* Example: Force a smaller font size on very small screens if needed */
+     /* font-size: 2.25rem; /* Equivalent to text-4xl */
+     /* line-height: 2.5rem; */
+     /* You might rely on Tailwind classes in JSX for this still */
+  }
+
+  .description {
+     /* Example: Control max-width more precisely */
+     max-width: 90%;
+     margin-left: auto;
+     margin-right: auto;
+     font-size: 1rem; /* text-base */
+     /* Add more specific text styling */
+  }
+
+   .textRotateContainer {
+     /* Example: Adjust margins around the TextRotate component */
+     margin-top: 1rem;
+     margin-bottom: 1.5rem; /* mb-6 */
+   }
+
+  .mediaContainer {
+    /* This holds the Image on mobile / Scene on desktop */
+    margin-top: -20px; /* Adjust spacing above the image */
+    margin-bottom: 1rem; /* Add space below the image */
+    max-width: 300px; /* Example: Explicitly set max-width for the image container */
+    margin-left: auto; /* Center the container */
+    margin-right: auto; /* Center the container */
+  }
+
+  .translateButtonContainer {
+     margin-top: 0; /* Adjust spacing above the button */
+     margin-bottom: 2rem; /* mb-8 */
+     /* Ensure it's centered if needed */
+     display: flex;
+     justify-content: center;
+  }
+
+  /* --- Styling using @apply (Optional) --- */
+  /* You can also use Tailwind utilities here */
+  .someMobileElement {
+     @apply text-center p-4 bg-blue-900;
+  }
+}
+
+/* --- Base Styles (Optional - Apply to all sizes) --- */
+/* You could define base styles here too */
+.baseTitle {
+   /* font-weight: bold; */
+   /* @apply font-bold; */ /* Using Tailwind */
+}
